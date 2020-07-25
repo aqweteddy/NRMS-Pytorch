@@ -4,7 +4,7 @@ from typing import List
 import orjson as json
 import torch
 # from gensim.models import Word2Vec
-from transformers import BertTokenizerFast
+from transformers import ElectraTokenizerFast
 from torch.utils import data
 from tqdm import tqdm
 
@@ -16,7 +16,7 @@ class Dataset(data.Dataset):
         self.maxlen = maxlen
         self.neg_k = neg_k
         self.pos_num = pos_num
-        self.tokenizer = BertTokenizerFast.from_pretrained(bert)
+        self.tokenizer = ElectraTokenizerFast.from_pretrained(bert)
         # self.w2id = {w: w2v.wv.vocab[w].index for w in w2v.wv.vocab}
 
     def load_json(self, file: str):
