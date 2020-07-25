@@ -10,17 +10,9 @@ class NRMS(nn.Module):
         super(NRMS, self).__init__()
         self.hparams = hparams
         self.doc_encoder = DocEncoder(hparams, weight=weight)
-        # proj = InProjContainer(nn.Linear(hparams['encoder_size'], hparams['encoder_size']),
-        #                        nn.Linear(hparams['encoder_size'], hparams['encoder_size']),
-        #                        nn.Linear(hparams['encoder_size'], hparams['encoder_size']))
-        self.mha = nn.MultiheadAttention(hparams['encoder_size'], hparams['nhead'], dropout=0.1)
-
-        # self.mha = MultiheadAttentionContainer(nhead=hparams['nhead'],
-        #                                        in_proj_container=proj,
-        #                                        attention_layer=ScaledDotProduct(),
-        #                                        out_proj=nn.Linear(hparams['encoder_size'], hparams['encoder_size']))
-        self.proj = nn.Linear(hparams['encoder_size'], hparams['encoder_size'])
-        self.additive_attn = AdditiveAttention(hparams['encoder_size'], hparams['v_size'])
+        self.mha = nn.MultiheadAttention(hparams['embed_size'], hparams['nhead'], dropout=0.1)
+        self.proj = nn.Linear(hparams['embed_size'], hparams['embed_size'])
+        self.additive_attn = AdditiveAttention(hparams['embed_size'], hparams['v_size'])
         self.criterion = nn.CrossEntropyLoss()
 
     def forward(self, clicks, cands, labels=None):

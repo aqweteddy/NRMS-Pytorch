@@ -12,10 +12,8 @@ from metric import ndcg_score, mrr_score
 class Model(pl.LightningModule):
     def __init__(self, hparams):
         super(Model, self).__init__()
-        self.w2v = Word2Vec.load(hparams['pretrained_model'])
-        if hparams['model']['dct_size'] == 'auto':
-            hparams['model']['dct_size'] = len(self.w2v.wv.vocab)
-        self.model = NRMS(hparams['model'], torch.tensor(self.w2v.wv.vectors))
+        self.bert = hparams['pretrained_model']
+        self.model = NRMS(hparams['model'], hparams['pretrained_model'])
         self.hparams = hparams
 
     def configure_optimizers(self):
@@ -29,9 +27,9 @@ class Model(pl.LightningModule):
         """
         d = self.hparams['data']
         self.train_ds = Dataset(
-            './data/articles.json', './data/users_list.json', self.w2v, maxlen=self.hparams['data']['maxlen'], pos_num=d['pos_k'], neg_k=d['neg_k'])
+            './data/articles.json', './data/users_list.json', self.bert, maxlen=self.hparams['data']['maxlen'], pos_num=d['pos_k'], neg_k=d['neg_k'])
         self.val_ds = ValDataset(
-            50, './data/articles.json', './data/users_list.json', self.w2v)
+            50, './data/articles.json', './data/users_list.json', self.bert)
         tmp = [t.unsqueeze(0) for t in self.train_ds[0]]
         self.logger.experiment.add_graph(self.model, tmp)
         # num_train = int(len(ds) * 0.85)

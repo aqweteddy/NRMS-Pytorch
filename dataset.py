@@ -3,20 +3,21 @@ from typing import List
 
 import orjson as json
 import torch
-from gensim.models import Word2Vec
+# from gensim.models import Word2Vec
+from transformers import BertTokenizerFast
 from torch.utils import data
 from tqdm import tqdm
 
 
 class Dataset(data.Dataset):
-    def __init__(self, article_file: str, user_file: str, w2v, maxlen: int = 15, pos_num: int = 50, neg_k: int = 4):
+    def __init__(self, article_file: str, user_file: str, bert, maxlen: int = 15, pos_num: int = 50, neg_k: int = 4):
         self.articles = self.load_json(article_file)
         self.users = self.load_json(user_file)
         self.maxlen = maxlen
         self.neg_k = neg_k
         self.pos_num = pos_num
-
-        self.w2id = {w: w2v.wv.vocab[w].index for w in w2v.wv.vocab}
+        self.tokenizer = BertTokenizerFast.from_pretrained(bert)
+        # self.w2id = {w: w2v.wv.vocab[w].index for w in w2v.wv.vocab}
 
     def load_json(self, file: str):
         with open(file, 'r') as f:
@@ -24,10 +25,8 @@ class Dataset(data.Dataset):
 
     def sent2idx(self, tokens: List[str]):
         # tokens = tokens[3:]
-        if ']' in tokens:
-            tokens = tokens[tokens.index(']'):]
-        tokens = [self.w2id[token.strip()]
-                  for token in tokens if token.strip() in self.w2id.keys()]
+        tokens = ''.join(tokens)
+        tokens = self.tokenizer.encode(tokens)
         tokens += [0] * (self.maxlen - len(tokens))
         tokens = tokens[:self.maxlen]
         return tokens
@@ -106,9 +105,9 @@ class ValDataset(Dataset):
 
 
 if __name__ == '__main__':
-    w2v = Word2Vec.load('./word2vec/wiki_300d_5ws.model')
+    # w2v = Word2Vec.load('./word2vec/wiki_300d_5ws.model')
     ds = ValDataset(50, './data/articles.json', './data/users_list.json',
-                 w2v, maxlen=30, pos_num=50, neg_k=4)
+                 'hfl/chinese-roberta-wwm-ext', maxlen=30, pos_num=50, neg_k=4)
     print(ds[10])
     for i in tqdm(ds):
         pass

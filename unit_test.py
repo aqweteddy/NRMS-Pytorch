@@ -26,7 +26,7 @@ def attention():
 def doc_encoder():
     from model.doc_encoder import DocEncoder
 
-    encoder = DocEncoder(hparams['model'])
+    encoder = DocEncoder(hparams['model'], weight=hparams['pretrained_model'])
     x = torch.randint(0, 100, (16, 100))
     output = encoder(x)
     print(output.shape)
@@ -40,6 +40,6 @@ def NRMS():
     logits = nrms(clicks, cands)
     # print(logits.shape)
 
-# doc_encoder()
-attention()
+doc_encoder()
+# attention()
 # NRMS()
