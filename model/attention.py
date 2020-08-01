@@ -1,7 +1,6 @@
 import torch
 import torch.nn as nn
 
-# from https://github.com/pytorch/text/blob/60907bf3394a97eb45056a237ca0d647a6e03216/torchtext/modules/multiheadattention.py#L5
 from typing import Tuple, Optional
 
 

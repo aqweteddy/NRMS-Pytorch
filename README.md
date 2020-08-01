@@ -1,6 +1,6 @@
 # NRMS
 
-* Pytorch 1.5 
+* Pytorch 1.5
 * [Offical Implementation](https://github.com/wuch15/IJCAI2019-NAML) (keras)
 
 ## Change
@@ -19,12 +19,18 @@
 * train on one Titan RTX
 * train until early stop
 
+### Model
+
+* original: Use Word2Vec pretrained on Wiki-zh
+* Roberta: roberta-base in [this](https://github.com/ymcui/Chinese-BERT-wwm)
+* ELETRA: electra-smiall in [this](https://github.com/ymcui/Chinese-ELECTRA)
+
 ### training time
 
 * original(Adam): 1 hr
 * original(Ranger): 1 hr 4 min
 * Roberta(Ranger): 19 hr 46 min
-* ELETRA-small(Ranger): 2hr 19min
+* ELETRA-Small(Ranger): 2hr 19min
 
 ### Score on ValidationSet
 

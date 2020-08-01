@@ -5,6 +5,7 @@ from model import NRMS
 from typing import List
 from gaisTokenizer import Tokenizer
 
+
 class Model(pl.LightningModule):
     def __init__(self, hparams):
         super(Model, self).__init__()
