@@ -40,6 +40,6 @@ def NRMS():
     logits = nrms(clicks, cands)
     # print(logits.shape)
 
-doc_encoder()
+# doc_encoder()
 # attention()
-# NRMS()
+NRMS()

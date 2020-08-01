@@ -43,4 +43,3 @@ class NRMS(nn.Module):
             loss = self.criterion(logits, labels)
             return loss, logits
         return torch.sigmoid(logits)
-        # return torch.softmax(logits, -1)

@@ -69,7 +69,7 @@ if __name__ == '__main__':
         articles = json.loads(f.read())
     with open('./data/users_list.json', 'r') as f:
         users = json.loads(f.read())
-    nrms = Model.load_from_checkpoint('lightning_logs/bert/v1/epoch=10-auroc=0.92.ckpt')
+    nrms = Model.load_from_checkpoint('lightning_logs/bert/v1/epoch=13-auroc=0.93.ckpt')
     viewed = users[1001]['push'][:50]
     viewed = [''.join(articles[v]['title']) for v in viewed]
     cands = [''.join(a['title']) for a in random.sample(articles, 20)] + viewed[40:]
