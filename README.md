@@ -1,8 +1,8 @@
 # NRMS
 
 * Pytorch 1.5
-* [Neural News Recommendation with Multi-Head Self-Attention](https://github.com/wuch15/IJCAI2019-NAML)
-* [Offical Implementation](https://github.com/wuch15/IJCAI2019-NAML) (keras)
+* [Neural News Recommendation with Multi-Head Self-Attention](https://www.aclweb.org/anthology/D19-1671/)
+* [Offical Implementation](https://github.com/wuch15/EMNLP2019-NRMS) (keras)
 
 ## Change
 
